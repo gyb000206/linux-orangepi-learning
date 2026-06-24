@@ -70,6 +70,8 @@ make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- menuconfig
 ```
 
 > 💡 配置文件中所有选项的注释见 [`arch/arm64/configs/orangepi_defconfig`](arch/arm64/configs/orangepi_defconfig)
+>
+> 💡 还有一键 QEMU 测试脚本: `./scripts/qemu-test.sh`
 
 ### 3️⃣ 编译
 
@@ -184,7 +186,30 @@ linux-orangepi/
 
 ---
 
-## 🖥️ QEMU 测试
+## � 动手实践
+
+除了阅读源码，这个仓库还提供了动手练习的素材：
+
+| 内容 | 位置 | 说明 |
+|------|------|------|
+| 🧪 第一个内核模块 | [`examples/hello-module/`](examples/hello-module/) | 带详细注释的 hello.ko 示例 |
+| 🖥️ QEMU 一键测试 | [`scripts/qemu-test.sh`](scripts/qemu-test.sh) | 自动编译 busybox + 启动 QEMU |
+
+### 编译示例模块
+
+```bash
+# 进入示例目录
+cd examples/hello-module
+
+# 交叉编译 (为 ARM64)
+make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- \
+     -C /home/gaoyubo/linux-orangepi M=$(pwd) modules
+
+# 将 hello.ko 传到 Orange Pi 上测试
+# 或用 QEMU 测试: scp hello.ko root@192.168.x.x:/root/
+```
+
+> 📖 详细说明见 [`examples/README.md`](examples/README.md)
 
 ### 搭建测试环境
 
