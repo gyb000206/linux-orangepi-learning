@@ -4,6 +4,35 @@
  * Based on sun50i-h5-orangepi-pc2.dts, which is:
  *   Copyright (C) 2016 ARM Ltd.
  *
+ * ============================================================
+ * 📖 学习指南:
+ *   这是 Orange Pi Prime 的设备树源文件 (Device Tree Source)
+ *
+ *   Device Tree 是描述硬件拓扑的数据结构，操作系统启动时读取它
+ *   来了解硬件配置（有哪些设备、在什么地址、如何连接）。
+ *
+ *   文件层级:
+ *     sun50i-h5-orangepi-prime.dts   ← 板级 (本文件)
+ *       └─ sun50i-h5.dtsi            ← SoC 级 (H5 芯片通用)
+ *            └─ sunxi-h3-h5.dtsi     ← 平台级 (H3/H5 共用)
+ *
+ *   关键语法:
+ *     /dts-v1/           - 设备树版本声明
+ *     #include "..."      - 包含其他 .dtsi 文件
+ *     / { ... };          - 根节点，描述板级硬件
+ *     &label { ... };     - 引用并覆盖其他文件中定义的节点
+ *     <&phandle>          - 引用带 label 的节点（phandle）
+ *     status = "okay"     - 启用设备（默认可能是 disabled）
+ *
+ *   编译方法:
+ *     dtc -I dts -O dtb sun50i-h5-orangepi-prime.dts -o output.dtb
+ *     (内核 make dtbs 会自动调用 dtc)
+ *
+ *   运行时查看:
+ *     ls /proc/device-tree/            # 内核解析后的设备树
+ *     cat /proc/device-tree/model      # 板卡型号
+ * ============================================================
+ *
  * This file is dual-licensed: you can use it either under the terms
  * of the GPL or the X11 license, at your option. Note that this dual
  * licensing only applies to this file, and not this project as a

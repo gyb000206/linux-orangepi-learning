@@ -1,6 +1,28 @@
 /*
  * Copyright (C) 2016 ARM Ltd.
  *
+ * ============================================================
+ * 📖 学习指南:
+ *   sun50i-h5.dtsi - 全志 H5 SoC 的设备树包含文件
+ *
+ *   sun50i 是全志对 64-bit ARM SoC 的代号 (ARMv8-A)
+ *   H5 是四核 Cortex-A53 芯片，是 H3 (32-bit Cortex-A7) 的 64 位版本
+ *
+ *   H5 vs H3 主要差异:
+ *     H3: ARM Cortex-A7  (32-bit, ARMv7-A)
+ *     H5: ARM Cortex-A53 (64-bit, ARMv8-A) ← 本文件
+ *
+ *   此文件定义:
+ *     - CPU 核心 (4× Cortex-A53, enable-method = "psci")
+ *     - 中断控制器 (GIC-400)
+ *     - 时钟控制器引用 (CCU, 来自 sunxi-h3-h5.dtsi)
+ *     - 热管理 (Thermal zones)
+ *
+ *   PSCI (Power State Coordination Interface):
+ *     用于多核启动和电源管理的 ARM 标准固件接口
+ *     U-Boot 在启动 Linux 前会安装 PSCI 处理程序
+ * ============================================================
+ *
  * This file is dual-licensed: you can use it either under the terms
  * of the GPL or the X11 license, at your option. Note that this dual
  * licensing only applies to this file, and not this project as a

@@ -4,6 +4,17 @@
 # This file is included by the global makefile so that you can add your own
 # architecture-specific flags and dependencies.
 #
+# 📖 学习要点:
+#   1. KBUILD_CFLAGS  - C 编译器标志 (如 -mgeneral-regs-only)
+#   2. KBUILD_AFLAGS  - 汇编器标志
+#   3. LDFLAGS_vmlinux - 链接器标志
+#   4. make 目标: Image, Image.gz, vmlinux, dtbs
+#
+#   arm64 关键编译标志:
+#     -mgeneral-regs-only  禁止使用浮点/NEON寄存器 (内核态不保存FP/SIMD上下文)
+#     -mabi=lp64           LP64 ABI: long=64bit, pointer=64bit
+#     -fno-asynchronous-unwind-tables  减小内核体积
+#
 # This file is subject to the terms and conditions of the GNU General Public
 # License.  See the file "COPYING" in the main directory of this archive
 # for more details.

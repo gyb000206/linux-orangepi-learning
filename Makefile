@@ -1,10 +1,34 @@
 # SPDX-License-Identifier: GPL-2.0
+#
+# 📖 Linux 内核顶层 Makefile — 编译系统的入口
+#
+# 内核版本定义 (主版本.次版本.补丁版本)
 VERSION = 5
 PATCHLEVEL = 4
 SUBLEVEL = 65
 EXTRAVERSION =
 NAME = Kleptomaniac Octopus
-
+#
+# ★ 编译流程:
+#   1. make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- xxx_defconfig  → 生成 .config
+#   2. make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- -j$(nproc) Image → 编译内核
+#
+# ★ 常用目标:
+#   Image / Image.gz  → 内核镜像 (未压缩/压缩)
+#   modules           → 编译内核模块 (.ko)
+#   dtbs              → 编译设备树 (.dtb)
+#   *_defconfig       → 使用默认配置
+#   menuconfig        → 图形化配置界面 (TUI)
+#   clean / mrproper  → 清理编译产物
+#   help              → 查看所有可用目标
+#
+# ★ 常用变量:
+#   ARCH=arm64                → 目标架构
+#   CROSS_COMPILE=aarch64-linux-gnu- → 交叉编译器前缀
+#   -j$(nproc)                → 并行编译 (使用所有CPU核心)
+#   V=1                       → 显示详细编译命令
+#   INSTALL_MOD_PATH=/path    → 模块安装目标路径
+#
 # *DOCUMENTATION*
 # To see a list of typical targets execute "make help"
 # More info can be located in ./README

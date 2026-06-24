@@ -1,4 +1,15 @@
 # SPDX-License-Identifier: GPL-2.0-only
+#
+# 📖 arch/arm64/Kconfig.platforms
+#    定义 ARM64 支持的 SoC 平台/厂商
+#    每个 config ARCH_XXX 对应一个 SoC 系列
+#
+# Orange Pi 相关的平台:
+#   ARCH_SUNXI  → 全志 (Allwinner) H5/H6/A64 系列
+#   ARCH_BCM2835 → 树莓派 (Raspberry Pi) 用的博通芯片
+#
+# 选中某个平台后，对应的设备树 (.dts→.dtb) 和驱动才会被编译
+#
 menu "Platform selection"
 
 config ARCH_ACTIONS
@@ -21,6 +32,12 @@ config ARCH_SUNXI
 	select RESET_CONTROLLER
 	help
 	  This enables support for Allwinner sunxi based SoCs like the A64.
+	  
+	  ★ 这是 Orange Pi 等全志芯片开发板的核心平台选项
+	  支持的芯片: H5 (sun50i-h5), H6 (sun50i-h6), A64 (sun50i-a64)
+	  使用本选项的设备树: sun50i-h5-orangepi-*.dts 等
+	  启用的关键驱动: dwmac-sun8i (网卡), sunxi-mmc (SD卡),
+	                   sunxi-ng (时钟), pinctrl-sunxi (GPIO)
 
 config ARCH_ALPINE
 	bool "Annapurna Labs Alpine platform"

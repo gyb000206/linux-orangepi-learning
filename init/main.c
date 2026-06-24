@@ -2,6 +2,21 @@
 /*
  *  linux/init/main.c
  *
+ *  ★ 这是 Linux 内核最重要的文件之一！
+ *  包含内核的 C 语言入口函数 start_kernel()
+ *
+ *  内核启动流程 (arm64):
+ *    芯片上电 → Boot ROM → U-Boot → head.S (汇编入口)
+ *      → start_kernel() [本文件!] → rest_init()
+ *        → kernel_init() (PID=1, 第一个用户进程)
+ *        → cpu_idle()    (PID=0, CPU空闲进程)
+ *
+ *  学习建议:
+ *    1. 先看函数名和注释，理解每一步干什么
+ *    2. 不要陷入子函数的细节，先建立全局流程
+ *    3. 用 cscope/ctags 跳转查看感兴趣的子函数
+ *    4. 配合 dmesg 输出对照理解各个阶段
+ *
  *  Copyright (C) 1991, 1992  Linus Torvalds
  *
  *  GK 2/5/95  -  Changed to support mounting root fs via NFS
@@ -573,6 +588,24 @@ void __init __weak arch_call_rest_init(void)
 	rest_init();
 }
 
+/*
+ * ★★★ start_kernel() - Linux 内核的 C 语言入口点 ★★★
+ *
+ * 这是整个 Linux 内核最重要的函数之一。
+ * arch/arm64/kernel/head.S 做完汇编级初始化后调用它。
+ *
+ * 调用约定 (arm64):
+ *   - asmlinkage: 参数通过寄存器传递 (不是栈)
+ *   - __visible:  编译器不优化掉这个函数
+ *   - __init:     函数放在 .init.text 段, 初始化完后释放内存
+ *
+ * 主要工作:
+ *   1. 架构初始化 (setup_arch) - 解析设备树、设置内存
+ *   2. 内存管理初始化 (mm_init)
+ *   3. 调度器初始化 (sched_init)
+ *   4. 中断/定时器初始化
+ *   5. 调用 rest_init() 创建 PID=1 和 PID=0
+ */
 asmlinkage __visible void __init start_kernel(void)
 {
 	char *command_line;
